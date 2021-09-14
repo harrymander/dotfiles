@@ -24,6 +24,8 @@
     branchauthors = "! for branch in `git branch -r | grep -v HEAD`;do echo `git show --format=\"%ai %ar by %an\" $branch | head -n 1` \t$branch; done | sort -r"
     fgrep = "!f() { local ptn=$1; shift; git grep $ptn $(git rev-list --all -- $@) -- $@; }; f"
 	cp = cherry-pick
+    diffword = diff --word-diff
+    wdiff = diff --word-diff
 [core]
 	editor = vim
 [diff]
