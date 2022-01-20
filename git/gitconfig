@@ -8,6 +8,7 @@
 	last = log -1 HEAD
 	summ = log --pretty=oneline
 	l = log --pretty=oneline
+	lplain = log --oneline --no-decorate
 	diffname = diff --name-status
 	diffp = diff HEAD~ HEAD
 	col = checkout @{-1}
