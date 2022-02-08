@@ -8,6 +8,10 @@ if [ -f "$HOME/.gitconfig" ]; then
 	esac
 fi
 
+if [ -z "$PREFIX" ]; then
+	PREFIX=/$HOME/.local
+fi
+
 read -rp 'Enter default git user name: ' username
 read -rp 'Enter default git email address: ' email
 
@@ -18,3 +22,6 @@ cat > "$HOME/.gitconfig" << EOF
 [include]
     path = $(dirname -- "$(realpath -- "${BASH_SOURCE[0]}")")/gitconfig
 EOF
+
+set -v
+ln -s "$(realpath ./git-com)" "$PREFIX/bin"

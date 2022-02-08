@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+if git branch --format='%(refname:short)' | grep -qx master ; then
+    git checkout master
+else
+    git checkout main
+fi
