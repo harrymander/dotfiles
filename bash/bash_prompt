@@ -20,11 +20,9 @@ function _update_ps1() {
 
     # Show git info
     if branch=$(2>/dev/null git branch --show-current); then
-        # Set colour to red if there are conflicts otherwise yellow
-        if [[ -z "$(git diff --name-only --diff-filter=U --relative)" ]]; then
+        # Set colour to yellow if there are conflicts
+        if [[ -n "$(git diff --name-only --diff-filter=U --relative)" ]]; then
             PS1+="${YELLOW}"
-        else
-            PS1+="${RED}"
         fi
 
         PS1+=" ($branch"
