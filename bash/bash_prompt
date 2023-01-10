@@ -12,6 +12,12 @@ function _update_ps1() {
     # Set terminal title = "[username]@[hostname]:[path]"
     PS1="\[\e]0;\u@\h:\w\a\]"
 
+    # Number of jobs
+    jobs="$(jobs | wc -l)"
+    if [[ "${jobs}" -ne 0 ]]; then
+        PS1+="[${jobs}] "
+    fi
+
     # chroot info
     PS1+="${debian_chroot:+($debian_chroot)}"
 
