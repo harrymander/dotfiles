@@ -1,0 +1,62 @@
+#!/bin/bash
+
+NOCOL="\[\033[00m\]"
+BGREEN="\[\033[01;32m\]"
+BBLUE="\[\033[01;34m\]"
+RED="\[\033[0;31m\]"
+YELLOW="\[\033[0;33m\]"
+
+function _update_ps1() {
+    retcode=$?
+
+    # Set terminal title = "[username]@[hostname]:[path]"
+    PS1="\[\e]0;\u@\h:\w\a\]"
+
+    # chroot info
+    PS1+="${debian_chroot:+($debian_chroot)}"
+
+    # "[username]@[hostname]:[path]"
+    PS1+="${BGREEN}\u@\h${NOCOL}:${BBLUE}\w${NOCOL}"
+
+    # Show git info
+    if branch=$(2>/dev/null git branch --show-current); then
+        # Set colour to red if there are conflicts otherwise yellow
+        if [[ -z "$(git diff --name-only --diff-filter=U --relative)" ]]; then
+            PS1+="${YELLOW}"
+        else
+            PS1+="${RED}"
+        fi
+
+        PS1+=" ($branch"
+
+        # Add asterisk if there are uncommitted changes
+        if [[ -n "$(git status -s)" ]]; then
+            PS1+="*"
+        fi
+
+        # Show commits ahead/behind of remote
+        ahead=$(2>/dev/null git rev-list --count "@{upstream}"..)
+        behind=$(2>/dev/null git rev-list --count .."@{upstream}")
+        if [[ "${ahead:-0}" -ne 0 && "${behind:-0}" -ne 0 ]]; then
+            PS1+=" +${ahead}/-${behind}"
+        elif [[ "${ahead:-0}" -ne 0 ]]; then
+            PS1+=" +${ahead}"
+        elif [[ "${behind:-0}" -ne 0 ]]; then
+            PS1+=" -${behind}"
+        fi
+
+        PS1+=")${NOCOL} "
+    fi
+
+    if [[ "$retcode" -ne 0 ]]; then
+        PS1+="${RED}[$retcode]\$${NOCOL}"
+    else
+        PS1+="$"
+    fi
+
+    PS1+=" "
+}
+
+if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
