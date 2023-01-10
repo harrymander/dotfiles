@@ -52,6 +52,7 @@ function _update_ps1() {
         PS1+=")${NOCOL} "
     fi
 
+    # Show previous returncode if non-zero
     if [[ "$retcode" -ne 0 ]]; then
         PS1+="${RED}[$retcode]\$${NOCOL}"
     else
