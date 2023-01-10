@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Customises the bash prompt
+
+# Source this file in your .bashrc
+
 NOCOL="\[\033[00m\]"
 BGREEN="\[\033[01;32m\]"
 BBLUE="\[\033[01;34m\]"
