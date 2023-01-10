@@ -53,6 +53,12 @@ function _update_ps1() {
             PS1+=" -${behind}"
         fi
 
+        # Show number of stashes
+        stash=$(git stash list | wc -l)
+        if [[ "${stash}" -ne 0 ]]; then
+            PS1+=" stash@${stash}"
+        fi
+
         PS1+=")${NOCOL} "
     fi
 
