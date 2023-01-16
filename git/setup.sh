@@ -24,4 +24,5 @@ cat > "$HOME/.gitconfig" << EOF
 EOF
 
 set -v
+mkdir -p "${PREFIX}/bin"
 ln -s "$(realpath "$(dirname "$0")/git-com")" "$PREFIX/bin"
