@@ -37,6 +37,10 @@ function _update_ps1() {
             PS1+="${YELLOW}"
         fi
 
+        if [[ -z "$branch" ]]; then
+            branch=detached@$(git rev-parse --short HEAD)
+        fi
+
         PS1+=" ($branch"
 
         # Add asterisk if there are uncommitted changes
