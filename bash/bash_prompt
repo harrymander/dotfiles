@@ -23,6 +23,11 @@ function _update_ps1() {
         PS1+="[${jobs}] "
     fi
 
+    # virtualenv
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        PS1+="($(basename -- "$VIRTUAL_ENV")) "
+    fi
+
     # chroot info
     PS1+="${debian_chroot:+($debian_chroot)}"
 
