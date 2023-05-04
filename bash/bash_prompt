@@ -13,8 +13,14 @@ function _update_ps1() {
     local RED="\[\033[0;31m\]"
     local YELLOW="\[\033[0;33m\]"
 
+    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+        PS1="$BASH_PROMPT_SSH_PREFIX"
+    else
+        PS1=""
+    fi
+
     # Set terminal title = "[username]@[hostname]:[path]"
-    PS1="\[\e]0;\u@\h:\w\a\]"
+    PS1+="\[\e]0;\u@\h:\w\a\]"
 
     # Number of jobs
     local jobs
