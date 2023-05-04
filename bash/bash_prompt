@@ -32,7 +32,7 @@ function _update_ps1() {
     PS1+="${debian_chroot:+($debian_chroot)}"
 
     # "[username]@[hostname]:[path]"
-    PS1+="${BGREEN}\u@\h${NOCOL}:${BBLUE}\w${NOCOL}"
+    PS1+="${BASH_PROMPT_USER_HOST_PREFIX}${BGREEN}\u@\h${NOCOL}:${BBLUE}\w${NOCOL}"
 
     # Show git info
     if [[ "${BASH_PROMPT_SHOW_GIT}" = 1 ]]; then
