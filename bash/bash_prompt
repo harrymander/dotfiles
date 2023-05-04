@@ -43,7 +43,7 @@ function _update_ps1() {
     PS1+="${BASH_PROMPT_USER_HOST_PREFIX}${BGREEN}\u@\h${NOCOL}:${BBLUE}\w${NOCOL}"
 
     # Show git info
-    if [[ "${BASH_PROMPT_SHOW_GIT}" = 1 ]]; then
+    if [[ -n "${BASH_PROMPT_SHOW_GIT}" ]]; then
         local branch
         if branch=$(2>/dev/null git branch --show-current); then
             # Set colour to yellow if there are conflicts
