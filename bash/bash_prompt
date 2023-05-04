@@ -15,11 +15,7 @@ function _update_ps1() {
         local YELLOW="\[\033[0;33m\]"
     fi
 
-    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-        PS1="$BASH_PROMPT_SSH_PREFIX"
-    else
-        PS1=""
-    fi
+    PS1="$BASH_PROMPT_PREFIX"
 
     # Set terminal title = "[username]@[hostname]:[path]"
     PS1+="\[\e]0;\u@\h:\w\a\]"
