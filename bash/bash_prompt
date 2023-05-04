@@ -35,45 +35,47 @@ function _update_ps1() {
     PS1+="${BGREEN}\u@\h${NOCOL}:${BBLUE}\w${NOCOL}"
 
     # Show git info
-    local branch
-    if branch=$(2>/dev/null git branch --show-current); then
-        # Set colour to yellow if there are conflicts
-        if [[ -n "$(git diff --name-only --diff-filter=U --relative)" ]]; then
-            PS1+="${YELLOW}"
+    if [[ "${BASH_PROMPT_SHOW_GIT}" = 1 ]]; then
+        local branch
+        if branch=$(2>/dev/null git branch --show-current); then
+            # Set colour to yellow if there are conflicts
+            if [[ -n "$(git diff --name-only --diff-filter=U --relative)" ]]; then
+                PS1+="${YELLOW}"
+            fi
+
+            if [[ -z "$branch" ]]; then
+                branch=detached@$(git rev-parse --short HEAD)
+            fi
+
+            PS1+=" ($branch"
+
+            # Add asterisk if there are uncommitted changes
+            if [[ -n "$(git status -s)" ]]; then
+                PS1+="*"
+            fi
+
+            # Show commits ahead/behind of remote
+            local ahead
+            local behind
+            ahead=$(2>/dev/null git rev-list --count "@{upstream}"..)
+            behind=$(2>/dev/null git rev-list --count .."@{upstream}")
+            if [[ "${ahead:-0}" -ne 0 && "${behind:-0}" -ne 0 ]]; then
+                PS1+=" +${ahead}/-${behind}"
+            elif [[ "${ahead:-0}" -ne 0 ]]; then
+                PS1+=" +${ahead}"
+            elif [[ "${behind:-0}" -ne 0 ]]; then
+                PS1+=" -${behind}"
+            fi
+
+            # Show number of stashes
+            local stash
+            stash=$(git stash list | wc -l)
+            if [[ "${stash}" -ne 0 ]]; then
+                PS1+=" stash@${stash}"
+            fi
+
+            PS1+=")${NOCOL} "
         fi
-
-        if [[ -z "$branch" ]]; then
-            branch=detached@$(git rev-parse --short HEAD)
-        fi
-
-        PS1+=" ($branch"
-
-        # Add asterisk if there are uncommitted changes
-        if [[ -n "$(git status -s)" ]]; then
-            PS1+="*"
-        fi
-
-        # Show commits ahead/behind of remote
-        local ahead
-        local behind
-        ahead=$(2>/dev/null git rev-list --count "@{upstream}"..)
-        behind=$(2>/dev/null git rev-list --count .."@{upstream}")
-        if [[ "${ahead:-0}" -ne 0 && "${behind:-0}" -ne 0 ]]; then
-            PS1+=" +${ahead}/-${behind}"
-        elif [[ "${ahead:-0}" -ne 0 ]]; then
-            PS1+=" +${ahead}"
-        elif [[ "${behind:-0}" -ne 0 ]]; then
-            PS1+=" -${behind}"
-        fi
-
-        # Show number of stashes
-        local stash
-        stash=$(git stash list | wc -l)
-        if [[ "${stash}" -ne 0 ]]; then
-            PS1+=" stash@${stash}"
-        fi
-
-        PS1+=")${NOCOL} "
     fi
 
     # Show previous returncode if non-zero
