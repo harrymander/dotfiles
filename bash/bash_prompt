@@ -7,11 +7,13 @@
 function _update_ps1() {
     local retcode=$?
 
-    local NOCOL="\[\033[00m\]"
-    local BGREEN="\[\033[01;32m\]"
-    local BBLUE="\[\033[01;34m\]"
-    local RED="\[\033[0;31m\]"
-    local YELLOW="\[\033[0;33m\]"
+    if [ -z "$BASH_PROMPT_DISABLE_COLOR" ]; then
+        local NOCOL="\[\033[00m\]"
+        local BGREEN="\[\033[01;32m\]"
+        local BBLUE="\[\033[01;34m\]"
+        local RED="\[\033[0;31m\]"
+        local YELLOW="\[\033[0;33m\]"
+    fi
 
     if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
         PS1="$BASH_PROMPT_SSH_PREFIX"
