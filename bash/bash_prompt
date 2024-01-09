@@ -32,6 +32,11 @@ function _update_ps1() {
         PS1+="($(basename -- "$VIRTUAL_ENV")) "
     fi
 
+    # conda env
+    if [[ -n "$CONDA_DEFAULT_ENV" ]]; then
+        PS1+="(🐍 $CONDA_DEFAULT_ENV) "
+    fi
+
     # chroot info
     PS1+="${debian_chroot:+($debian_chroot)}"
 
