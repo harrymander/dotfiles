@@ -5,6 +5,7 @@
 	br = branch
 	ci = commit
 	st = status
+	d = diff
 	summary = log --pretty=oneline
 	last = log -1 HEAD
 	summ = log --pretty=oneline
