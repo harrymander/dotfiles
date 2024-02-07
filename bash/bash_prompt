@@ -45,8 +45,12 @@ function _update_ps1() {
 
     # Show git info
     if [[ -n "${BASH_PROMPT_SHOW_GIT}" ]]; then
-        local branch
-        if branch=$(2>/dev/null git branch --show-current); then
+        if
+            [ "$(2>/dev/null git rev-parse --is-inside-work-tree)" = "true" ];
+        then
+            local branch
+            branch=$(git branch --show-current)
+
             # Set colour to yellow if there are conflicts
             if [[ -n "$(git diff --name-only --diff-filter=U --relative)" ]]; then
                 PS1+="${YELLOW}"
