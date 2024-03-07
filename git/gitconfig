@@ -29,6 +29,7 @@
 	cp = cherry-pick
     diffword = diff --word-diff
     wdiff = diff --word-diff
+    pushall = !git remote | xargs -I{} git push {}
 [core]
 	editor = vim
 [diff]
