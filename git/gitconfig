@@ -30,6 +30,7 @@
     diffword = diff --word-diff
     wdiff = diff --word-diff
     pushall = !git remote | xargs -I{} git push {}
+    sw = switch
 [core]
 	editor = vim
 [diff]
