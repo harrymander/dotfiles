@@ -3,7 +3,7 @@
 set -e
 
 if git branch --format='%(refname:short)' | grep -qx master ; then
-    git checkout master
+    git switch master
 else
-    git checkout main
+    git switch main
 fi
