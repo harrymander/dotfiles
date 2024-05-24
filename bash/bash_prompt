@@ -4,10 +4,26 @@
 
 # Source this file in your .bashrc
 
+function _is_in_git_tree() {
+    [[ "$(2>/dev/null git rev-parse --is-inside-work-tree)" = "true" ]]
+}
+
+function _git_has_modified_tracked_files() {
+    ! git diff-files --quiet
+}
+
+function _git_has_untracked_files() {
+    [[ $(git ls-files --others --exclude-standard) ]]
+}
+
+function _git_has_unmerged_files() {
+    [[ $(git ls-files --unmerged) ]]
+}
+
 function _update_ps1() {
     local retcode=$?
 
-    if [ -z "$BASH_PROMPT_DISABLE_COLOR" ]; then
+    if [[ -z "$BASH_PROMPT_DISABLE_COLOR" ]]; then
         local NOCOL="\[\033[00m\]"
         local BGREEN="\[\033[01;32m\]"
         local BBLUE="\[\033[01;34m\]"
@@ -44,51 +60,47 @@ function _update_ps1() {
     PS1+="${BASH_PROMPT_USER_HOST_PREFIX}${BGREEN}\u@\h${NOCOL}:${BBLUE}\w${NOCOL}"
 
     # Show git info
-    if [[ -n "${BASH_PROMPT_SHOW_GIT}" ]]; then
-        if
-            [ "$(2>/dev/null git rev-parse --is-inside-work-tree)" = "true" ];
-        then
-            local branch
-            branch=$(git branch --show-current)
+    if [[ -n "${BASH_PROMPT_SHOW_GIT}" ]] && _is_in_git_tree; then
+        local branch
+        branch=$(git branch --show-current)
 
-            # Set colour to yellow if there are conflicts
-            if [[ -n "$(git diff --name-only --diff-filter=U --relative)" ]]; then
-                PS1+="${YELLOW}"
-            fi
-
-            if [[ -z "$branch" ]]; then
-                branch=detached@$(git rev-parse --short HEAD)
-            fi
-
-            PS1+=" ($branch"
-
-            # Add asterisk if there are uncommitted changes
-            if [[ -n "$(git status -s)" ]]; then
-                PS1+="*"
-            fi
-
-            # Show commits ahead/behind of remote
-            local ahead
-            local behind
-            ahead=$(2>/dev/null git rev-list --count "@{upstream}"..)
-            behind=$(2>/dev/null git rev-list --count .."@{upstream}")
-            if [[ "${ahead:-0}" -ne 0 && "${behind:-0}" -ne 0 ]]; then
-                PS1+=" +${ahead}/-${behind}"
-            elif [[ "${ahead:-0}" -ne 0 ]]; then
-                PS1+=" +${ahead}"
-            elif [[ "${behind:-0}" -ne 0 ]]; then
-                PS1+=" -${behind}"
-            fi
-
-            # Show number of stashes
-            local stash
-            stash=$(git stash list | wc -l)
-            if [[ "${stash}" -ne 0 ]]; then
-                PS1+=" stash@${stash}"
-            fi
-
-            PS1+=")${NOCOL} "
+        if _git_has_unmerged_files; then
+            PS1+="${YELLOW}"
         fi
+
+        if [[ -z "$branch" ]]; then
+            branch=detached@$(git rev-parse --short HEAD)
+        fi
+        PS1+=" ($branch"
+
+        if _git_has_modified_tracked_files; then
+            PS1+="*"
+        fi
+        if _git_has_untracked_files; then
+            PS1+="?"
+        fi
+
+        # Show commits ahead/behind of remote
+        local ahead
+        local behind
+        ahead=$(2>/dev/null git rev-list --count "@{upstream}"..)
+        behind=$(2>/dev/null git rev-list --count .."@{upstream}")
+        if [[ "${ahead:-0}" -ne 0 && "${behind:-0}" -ne 0 ]]; then
+            PS1+=" +${ahead}/-${behind}"
+        elif [[ "${ahead:-0}" -ne 0 ]]; then
+            PS1+=" +${ahead}"
+        elif [[ "${behind:-0}" -ne 0 ]]; then
+            PS1+=" -${behind}"
+        fi
+
+        # Show number of stashes
+        local stash
+        stash=$(git stash list | wc -l)
+        if [[ "${stash}" -ne 0 ]]; then
+            PS1+=" stash@${stash}"
+        fi
+
+        PS1+=")${NOCOL} "
     fi
 
     # Show previous returncode if non-zero
