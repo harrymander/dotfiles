@@ -20,6 +20,10 @@ function _git_has_unmerged_files() {
     [[ $(git ls-files --unmerged) ]]
 }
 
+function _git_get_tracked_branch() {
+    2>/dev/null git rev-parse --abbrev-ref --symbolic-full-name "@{u}"
+}
+
 function _update_ps1() {
     local retcode=$?
 
@@ -81,16 +85,21 @@ function _update_ps1() {
         fi
 
         # Show commits ahead/behind of remote
-        local ahead
-        local behind
-        ahead=$(2>/dev/null git rev-list --count "@{upstream}"..)
-        behind=$(2>/dev/null git rev-list --count .."@{upstream}")
-        if [[ "${ahead:-0}" -ne 0 && "${behind:-0}" -ne 0 ]]; then
-            PS1+=" +${ahead}/-${behind}"
-        elif [[ "${ahead:-0}" -ne 0 ]]; then
-            PS1+=" +${ahead}"
-        elif [[ "${behind:-0}" -ne 0 ]]; then
-            PS1+=" -${behind}"
+        local tracked_branch
+        if [[ "$branch" ]] && tracked_branch=$(_git_get_tracked_branch); then
+            local ahead
+            local behind
+            ahead=$(2>/dev/null git rev-list --count "@{upstream}"..)
+            behind=$(2>/dev/null git rev-list --count .."@{upstream}")
+            if [[ "${ahead:-0}" -ne 0 && "${behind:-0}" -ne 0 ]]; then
+                PS1+=" +${ahead}/-${behind}:${tracked_branch}"
+            elif [[ "${ahead:-0}" -ne 0 ]]; then
+                PS1+=" +${ahead}:${tracked_branch}"
+            elif [[ "${behind:-0}" -ne 0 ]]; then
+                PS1+=" -${behind}:${tracked_branch}"
+            fi
+        else
+            PS1+=" [not tracked]"
         fi
 
         # Show number of stashes
