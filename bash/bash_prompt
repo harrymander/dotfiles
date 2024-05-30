@@ -66,10 +66,15 @@ function _update_ps1() {
     # Show git info
     if [[ -n "${BASH_PROMPT_SHOW_GIT}" ]] && _is_in_git_tree; then
         local branch
+        local current_color;
+
         branch=$(git branch --show-current)
 
         if _git_has_unmerged_files; then
             PS1+="${YELLOW}"
+            current_color="${YELLOW}"
+        else
+            current_color="${NOCOL}"
         fi
 
         if [[ -z "$branch" ]]; then
@@ -92,7 +97,7 @@ function _update_ps1() {
             ahead=$(2>/dev/null git rev-list --count "@{upstream}"..)
             behind=$(2>/dev/null git rev-list --count .."@{upstream}")
             if [[ "${ahead:-0}" -ne 0 && "${behind:-0}" -ne 0 ]]; then
-                PS1+=" ${YELLOW}+${ahead}/-${behind}:${tracked_branch}${NOCOL}"
+                PS1+=" ${YELLOW}+${ahead}/-${behind}:${tracked_branch}${current_color}"
             elif [[ "${ahead:-0}" -ne 0 ]]; then
                 PS1+=" +${ahead}:${tracked_branch}"
             elif [[ "${behind:-0}" -ne 0 ]]; then
