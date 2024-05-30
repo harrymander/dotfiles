@@ -111,7 +111,7 @@ function _update_ps1() {
         local stash
         stash=$(git stash list | wc -l)
         if [[ "${stash}" -ne 0 ]]; then
-            PS1+=" stash@${stash}"
+            PS1+=" stash=${stash}"
         fi
 
         PS1+=")${NOCOL} "
