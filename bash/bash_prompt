@@ -77,10 +77,11 @@ function _update_ps1() {
             current_color="${NOCOL}"
         fi
 
-        if [[ -z "$branch" ]]; then
-            branch=detached@$(git rev-parse --short HEAD)
+        if [[ "$branch" ]]; then
+            PS1+=" ($branch"
+        else
+            PS1+=" (detached@$(git rev-parse --short HEAD)"
         fi
-        PS1+=" ($branch"
 
         if _git_has_modified_tracked_files; then
             PS1+="*"
@@ -103,7 +104,7 @@ function _update_ps1() {
             elif [[ "${behind:-0}" -ne 0 ]]; then
                 PS1+=" -${behind}:${tracked_branch}"
             fi
-        else
+        elif [[ "$branch" ]]; then
             PS1+=" [not tracked]"
         fi
 
