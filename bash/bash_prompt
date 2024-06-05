@@ -49,7 +49,13 @@ function _update_ps1() {
 
     # virtualenv
     if [[ -n "$VIRTUAL_ENV" ]]; then
-        PS1+="($(basename -- "$VIRTUAL_ENV")) "
+        local venv_prompt
+        if [[ -n "$VIRTUAL_ENV_PROMPT" ]]; then
+            venv_prompt=$VIRTUAL_ENV_PROMPT
+        else
+            venv_prompt=$(basename -- "$VIRTUAL_ENV")
+        fi
+        PS1+="($venv_prompt) "
     fi
 
     # conda env
