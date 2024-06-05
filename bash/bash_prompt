@@ -48,20 +48,10 @@ function _update_ps1() {
     fi
 
     # virtualenv
-    if [[ -n "$VIRTUAL_ENV" ]]; then
-        local venv_prompt
-        if [[ -n "$VIRTUAL_ENV_PROMPT" ]]; then
-            venv_prompt=$VIRTUAL_ENV_PROMPT
-        else
-            venv_prompt=$(basename -- "$VIRTUAL_ENV")
-        fi
-        PS1+="($venv_prompt) "
-    fi
+    PS1+="${VIRTUAL_ENV:+(${VIRTUAL_ENV_PROMPT:-$(basename -- "$VIRTUAL_ENV")}) }"
 
     # conda env
-    if [[ -n "$CONDA_DEFAULT_ENV" ]]; then
-        PS1+="(🐍 $CONDA_DEFAULT_ENV) "
-    fi
+    PS1+="${CONDA_DEFAULT_ENV:+(🐍 $CONDA_DEFAULT_ENV) }"
 
     # chroot info
     PS1+="${debian_chroot:+($debian_chroot)}"
@@ -71,11 +61,7 @@ function _update_ps1() {
 
     # Show git info
     if [[ -n "${BASH_PROMPT_SHOW_GIT}" ]] && _is_in_git_tree; then
-        local branch
         local current_color;
-
-        branch=$(git branch --show-current)
-
         if _git_has_unmerged_files; then
             PS1+="${YELLOW}"
             current_color="${YELLOW}"
@@ -83,11 +69,9 @@ function _update_ps1() {
             current_color="${NOCOL}"
         fi
 
-        if [[ "$branch" ]]; then
-            PS1+=" ($branch"
-        else
-            PS1+=" (detached@$(git rev-parse --short HEAD)"
-        fi
+        local branch
+        branch=$(git branch --show-current)
+        PS1+=" (${branch:-detached@$(git rev-parse --short HEAD)}"
 
         if _git_has_modified_tracked_files; then
             PS1+="*"
