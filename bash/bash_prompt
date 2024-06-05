@@ -110,12 +110,10 @@ function _update_ps1() {
 
     # Show previous returncode if non-zero
     if [[ "$retcode" -ne 0 ]]; then
-        PS1+="${RED}[$retcode]\$${NOCOL}"
-    else
-        PS1+="$"
+        PS1+="${RED}[$retcode]"
     fi
-
-    PS1+=" "
+    PS1+="\\$"
+    PS1+="$NOCOL "
 }
 
 if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
