@@ -13,11 +13,11 @@ function _git_has_modified_tracked_files() {
 }
 
 function _git_has_untracked_files() {
-    [[ $(git ls-files --others --exclude-standard) ]]
+    [[ $(git -C "$1" ls-files --others --exclude-standard) ]]
 }
 
 function _git_has_unmerged_files() {
-    [[ $(git ls-files --unmerged) ]]
+    [[ $(git -C "$1" ls-files --unmerged) ]]
 }
 
 function _git_get_tracked_branch() {
@@ -61,8 +61,10 @@ function _update_ps1() {
 
     # Show git info
     if [[ -n "${BASH_PROMPT_SHOW_GIT}" ]] && _is_in_git_tree; then
-        local current_color;
-        if _git_has_unmerged_files; then
+        local current_color
+        local git_topdir
+        git_topdir=$(git rev-parse --show-toplevel)
+        if _git_has_unmerged_files "$git_topdir"; then
             PS1+="${YELLOW}"
             current_color="${YELLOW}"
         else
@@ -76,7 +78,7 @@ function _update_ps1() {
         if _git_has_modified_tracked_files; then
             PS1+="*"
         fi
-        if _git_has_untracked_files; then
+        if _git_has_untracked_files "$git_topdir"; then
             PS1+="?"
         fi
 
