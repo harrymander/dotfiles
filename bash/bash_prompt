@@ -24,6 +24,10 @@ function _git_get_tracked_branch() {
     2>/dev/null git rev-parse --abbrev-ref --symbolic-full-name "@{u}"
 }
 
+function _git_has_staged_files() {
+    ! git diff --cached --quiet
+}
+
 function _update_ps1() {
     local retcode=$?
 
@@ -80,6 +84,9 @@ function _update_ps1() {
         fi
         if _git_has_untracked_files "$git_topdir"; then
             PS1+="?"
+        fi
+        if _git_has_staged_files; then
+            PS1+="+"
         fi
 
         # Show commits ahead/behind of remote
