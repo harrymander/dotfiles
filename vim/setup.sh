@@ -13,6 +13,9 @@ curl -fLo "$HOME/.vim/autoload/plug.vim" "https://raw.githubusercontent.com/june
 curl -fLo "$HOME/.vim/autoload/pathogen.vim" "https://tpo.pe/pathogen.vim"
 
 ln -sf "$(dirname -- "$(realpath -- "${BASH_SOURCE[0]}")")/vimrc" "$HOME/.vim"
-echo 'runtime vimrc' > "$HOME/.vimrc"
+> "$HOME/.vimrc" cat << EOF
+runtime defaults.vim
+runtime vimrc
+EOF
 
 vim +PlugInstall +qall
