@@ -54,7 +54,17 @@ function _update_ps1() {
     fi
 
     # virtualenv
-    PS1+="${VIRTUAL_ENV:+(${VIRTUAL_ENV_PROMPT:-$(basename -- "$VIRTUAL_ENV")}) }"
+    if [[ "$VIRTUAL_ENV" ]]; then
+        if [[ "$VIRTUAL_ENV_PROMPT" ]]; then
+            if [[ "$VIRTUAL_ENV_PROMPT" =~ ^\(.+?\)\ $ ]]; then
+                PS1+=$VIRTUAL_ENV_PROMPT
+            else
+                PS1+="($VIRTUAL_ENV_PROMPT) "
+            fi
+        else
+            PS1+="($(basename -- "$VIRTUAL_ENV")) "
+        fi
+    fi
 
     # conda env
     PS1+="${CONDA_DEFAULT_ENV:+(🐍 $CONDA_DEFAULT_ENV) }"
