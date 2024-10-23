@@ -28,6 +28,8 @@ function _git_has_staged_files() {
     ! git diff --cached --quiet
 }
 
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
 function _update_ps1() {
     local retcode=$?
 
