@@ -1,21 +1,13 @@
-
-" Execute pathogen runtime path manager
-execute pathogen#infect()
-
 " **********************************************************
 " vim-plug Plugin manager
-
 " Make sure you use single quotes
 
-" Specify a directory for plugins
-call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin()
 
 " Configurable status line
 Plug 'itchyny/lightline.vim'
 
-" Initialize plugin system
 call plug#end()
-
 " **********************************************************
 
 set number relativenumber " Hybrid numbering
