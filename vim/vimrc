@@ -10,6 +10,22 @@ Plug 'itchyny/lightline.vim'
 call plug#end()
 " **********************************************************
 
+nnoremap <Plug>MoveLineUp :m -2<CR>
+nnoremap <C-Up> <Plug>MoveLineUp
+nnoremap <C-K> <Plug>MoveLineUp
+
+xnoremap <Plug>MoveBlockUpOne :m -2<CR>gv=gv
+xnoremap <C-Up> <Plug>MoveBlockUpOne
+xnoremap <C-K> <Plug>MoveBlockUpOne
+
+nnoremap <Plug>MoveLineDown :m +1<CR>
+nnoremap <C-Down> <Plug>MoveLineDown
+nnoremap <C-J> <Plug>MoveLineDown
+
+xnoremap <Plug>MoveBlockDownOne :m '>+1<CR>gv=gv
+xnoremap <C-Down> <Plug>MoveBlockDownOne
+xnoremap <C-J> <Plug>MoveBlockDownOne
+
 set number relativenumber " Hybrid numbering
 syntax enable " Enable syntax smart syntax highlighting
 
