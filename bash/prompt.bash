@@ -1,4 +1,4 @@
-#!/bin/bash
+# shellcheck shell=bash
 
 # Customises the bash prompt
 
