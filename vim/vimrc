@@ -26,9 +26,11 @@ xnoremap <Plug>MoveBlockDownOne :m '>+1<CR>gv=gv
 xnoremap <C-Down> <Plug>MoveBlockDownOne
 xnoremap <C-J> <Plug>MoveBlockDownOne
 
-" Delete word backwards (Ctrl+Backspace) and forwards (Ctrl+Del)
-inoremap  <C-W>
-inoremap <C-Del> <Space><Esc>ce
+" Delete word backwards (Ctrl+Backspace) and forwards (Ctrl+Del) in insert and
+" command modes
+noremap!  <C-W>
+inoremap <C-Del> <C-O>cw
+cnoremap <C-Del> <C-F>cw<C-C>
 
 set number relativenumber " Hybrid numbering
 syntax enable " Enable syntax smart syntax highlighting
