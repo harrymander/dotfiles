@@ -32,6 +32,11 @@ noremap!  <C-W>
 inoremap <C-Del> <C-O>cw
 cnoremap <C-Del> <C-F>cw<C-C>
 
+" Faster saving with Ctrl+S
+nnoremap <C-S> :w<CR>
+inoremap <C-S> <C-O>:w<CR>
+vnoremap <C-S> <C-C>:w<CR>gv
+
 set number relativenumber " Hybrid numbering
 syntax enable " Enable syntax smart syntax highlighting
 
