@@ -16,6 +16,7 @@
 	co = checkout
 	sw = switch
 	col = switch @{-1}
+	abort = rebase --abort
 
 	# Log operations
 	summary = log --pretty=oneline
