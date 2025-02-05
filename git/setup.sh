@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ -f "$HOME/.gitconfig" ]; then
 	read -rp ".gitconfig already exists, overwrite? [Y/n] " yn
 	case $yn in
