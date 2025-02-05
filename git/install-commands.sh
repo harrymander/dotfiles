@@ -16,3 +16,4 @@ link-git-command() {(
 
 mkdir -p "${PREFIX}/bin"
 link-git-command git-com
+link-git-command git-rebase-commit

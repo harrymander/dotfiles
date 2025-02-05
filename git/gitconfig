@@ -16,7 +16,6 @@
 	co = checkout
 	sw = switch
 	col = switch @{-1}
-	abort = rebase --abort
 
 	# Log operations
 	summary = log --pretty=oneline
@@ -37,6 +36,11 @@
 	cfg = config --global
 	cfl = config --local
 	cfs = config --system
+
+	# Rebase actions
+	abort = rebase --abort
+	reword = rebase-commit reword
+	edit = rebase-commit edit
 
 	# Show author of most recent commit on each branch
 	branchauthors = "! \

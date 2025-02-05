@@ -1,0 +1,44 @@
+#!/bin/sh
+
+set -e
+
+usage() {
+    echo "Usage: $0 (pick|edit|reword|squash) COMMIT"
+}
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+    usage
+    echo
+    cat << EOF
+Apply the given rebase action to the given commit. Equivalent to running
+\`git rebase\`, applying the action to the given commit in the editor,
+and exiting the editor.
+EOF
+    exit
+fi
+
+usage_error() {
+    >&2 echo "Error: $1"
+    >&2 usage
+    >&2 echo "Run '$0 --help' for more info."
+    exit 2
+}
+
+[ "$1" ] || usage_error "Missing ACTION"
+ACTION=$1
+shift
+
+[ "$1" ] || usage_error "Missing COMMIT"
+COMMIT=$1
+shift
+
+case "$ACTION" in
+    pick|edit|reword|squash) ;;
+    *) usage_error "Invalid action '$ACTION'" ;;
+esac
+
+[ -z "$1" ] || usage_error "Too many arguments"
+
+# The first line is the commit we want to modify, replace 'pick' with
+# the action
+GIT_SEQUENCE_EDITOR="sed -i '1 s/^pick/${ACTION}/'" git rebase -i "$COMMIT^"
