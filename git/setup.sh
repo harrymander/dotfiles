@@ -2,16 +2,14 @@
 
 set -e
 
+THISDIR=$(dirname -- "$(realpath -- "${BASH_SOURCE[0]}")")
+
 if [ -f "$HOME/.gitconfig" ]; then
 	read -rp ".gitconfig already exists, overwrite? [Y/n] " yn
 	case $yn in
 		[Yy]*) ;;
 		*) echo "Aborted."; exit;;
 	esac
-fi
-
-if [ -z "$PREFIX" ]; then
-	PREFIX=/$HOME/.local
 fi
 
 read -rp 'Enter default git user name: ' username
@@ -22,9 +20,7 @@ cat > "$HOME/.gitconfig" << EOF
 	name = ${username}
 	email = ${email}
 [include]
-	path = $(dirname -- "$(realpath -- "${BASH_SOURCE[0]}")")/gitconfig
+	path = ${THISDIR}/gitconfig
 EOF
 
-set -v
-mkdir -p "${PREFIX}/bin"
-ln -s "$(realpath "$(dirname "$0")/git-com")" "$PREFIX/bin"
+"$THISDIR/install-commands.sh"
