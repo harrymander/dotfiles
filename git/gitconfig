@@ -1,36 +1,51 @@
 [init]
 	defaultBranch = main
 [alias]
-	co = checkout
 	br = branch
-	ci = commit
 	st = status
-	d = diff
+	h = help
+	sm = submodule
+	rl = reflog
+
+	# Commit operations
+	amend = commit --amend
+	ci = commit
+	cp = cherry-pick
+
+	# Checkout/switch operations
+	co = checkout
+	sw = switch
+	col = switch @{-1}
+
+	# Log operations
 	summary = log --pretty=oneline
-	last = log -1 HEAD
-	summ = log --pretty=oneline
-	l = log --pretty=oneline
+	l = summary
 	lplain = log --oneline --no-decorate
+	last = log -1 HEAD
+	tree = log --graph --oneline --all --decorate
+	diffstat = diff --stat
+
+	# Diffing operations
+	d = diff
 	diffname = diff --name-status
-	diffp = diff HEAD~ HEAD
-	col = checkout @{-1}
+	diffword = diff --word-diff
+	wdiff = diff --word-diff
+	check = diff --check
+
+	# Config
 	cfg = config --global
 	cfl = config --local
 	cfs = config --system
-	tree = log --graph --oneline --all --decorate
-	h = help
-	kompare = difftool -y -g -t=kompare
-	sm = submodule
-	rl = reflog
-	diffstat = diff --stat
-	amend = commit --amend
-    branchauthors = "! for branch in `git branch -r | grep -v HEAD`;do echo `git show --format=\"%ai %ar by %an\" $branch | head -n 1` \t$branch; done | sort -r"
-    fgrep = "!f() { local ptn=$1; shift; git grep $ptn $(git rev-list --all -- $@) -- $@; }; f"
-	cp = cherry-pick
-    diffword = diff --word-diff
-    wdiff = diff --word-diff
-    pushall = !git remote | xargs -I{} git push {}
-    sw = switch
+
+	# Show author of most recent commit on each branch
+	branchauthors = "! \
+		for branch in `git branch -r | grep -v HEAD`; do \
+			echo `git show --format=\"%ai %ar by %an\" $branch | head -n 1` \t$branch; \
+		done | sort -r"
+
+	# Push to all remotes
+	pushall = !git remote | xargs -I{} git push {}
+
 [core]
 	editor = vim
 [diff]
