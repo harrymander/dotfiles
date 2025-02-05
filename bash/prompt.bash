@@ -28,6 +28,10 @@ function _git_has_staged_files() {
     ! git diff --cached --quiet
 }
 
+function _git_is_rebasing() {
+    [[ -d "$(git rev-parse --git-path rebase-apply)" || -d "$(git rev-parse --git-path rebase-merge)" ]]
+}
+
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 function _update_ps1() {
@@ -77,10 +81,13 @@ function _update_ps1() {
 
     # Show git info
     if [[ -n "${BASH_PROMPT_SHOW_GIT}" ]] && _is_in_git_tree; then
+        ! _git_is_rebasing
+        local not_rebasing=$?
+
         local current_color
         local git_topdir
         git_topdir=$(git rev-parse --show-toplevel)
-        if _git_has_unmerged_files "$git_topdir"; then
+        if _git_has_unmerged_files "$git_topdir" || [[ "$not_rebasing" -ne 0 ]]; then
             PS1+="${YELLOW}"
             current_color="${YELLOW}"
         else
@@ -89,7 +96,11 @@ function _update_ps1() {
 
         local branch
         branch=$(git branch --show-current)
-        PS1+=" (${branch:-detached@$(git rev-parse --short HEAD)}"
+        PS1+=" ("
+        if [[ "$not_rebasing" -ne 0 ]]; then
+            PS1+="rebasing "
+        fi
+        PS1+="${branch:-detached@$(git rev-parse --short HEAD)}"
 
         if _git_has_modified_tracked_files; then
             PS1+="*"
