@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ -d "$HOME/.vim" ] || [ -f "$HOME/.vimrc" ]; then
     read -rp ".vim directory and/or .vimrc exist, overwrite? [Y/n]" yn
     case $yn in
