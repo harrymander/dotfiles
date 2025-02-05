@@ -81,13 +81,15 @@ function _update_ps1() {
 
     # Show git info
     if [[ -n "${BASH_PROMPT_SHOW_GIT}" ]] && _is_in_git_tree; then
-        ! _git_is_rebasing
-        local not_rebasing=$?
+        local rebasing=''
+        if _git_is_rebasing; then
+            rebasing='1'
+        fi
 
         local current_color
         local git_topdir
         git_topdir=$(git rev-parse --show-toplevel)
-        if _git_has_unmerged_files "$git_topdir" || [[ "$not_rebasing" -ne 0 ]]; then
+        if _git_has_unmerged_files "$git_topdir" || [[ "$rebasing" ]]; then
             PS1+="${YELLOW}"
             current_color="${YELLOW}"
         else
@@ -97,7 +99,7 @@ function _update_ps1() {
         local branch
         branch=$(git branch --show-current)
         PS1+=" ("
-        if [[ "$not_rebasing" -ne 0 ]]; then
+        if [[ "$rebasing" ]]; then
             PS1+="rebasing "
         fi
         PS1+="${branch:-detached@$(git rev-parse --short HEAD)}"
