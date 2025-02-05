@@ -20,7 +20,7 @@ cat > "$HOME/.gitconfig" << EOF
 	name = ${username}
 	email = ${email}
 [include]
-    path = $(dirname -- "$(realpath -- "${BASH_SOURCE[0]}")")/gitconfig
+	path = $(dirname -- "$(realpath -- "${BASH_SOURCE[0]}")")/gitconfig
 EOF
 
 set -v
