@@ -15,10 +15,14 @@ venv() {
 Usage: ${FUNCNAME[@]} [VENV-DIR]
 
 Activate a Python virtual environment in the specified directory. If no
-directory is provided, first looks under the current directory for a directory
-named .venv, if there is no virtualenv located there, activates the virtualenv
-managed by Poetry if the current dir or any of its parent dirs is a Poetry
-project.
+directory is provided, first looks under the current directory for a
+directory named .venv, if there is no virtualenv located there, checks
+if there is a virtualenv managed by a Python dependency manager in the
+current dir or any of its parent dirs and activates it if it exists. The
+following dependency managers are checked in this order:
+
+  1. uv
+  2. poetry
 EOF
     return
     fi
