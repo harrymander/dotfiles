@@ -51,10 +51,24 @@ EOF
         >&2 echo "Not a virtualenv directory: $venv_dir"
         return 1
     else
-        >&2 echo "Not a virtualenv directory: $venv_dir; trying Poetry..."
-        if ! activate=$(poetry env activate); then
-            return 1
-        fi
+        _find_managed_venv() {
+            >&2 echo "Not a virtualenv directory: $venv_dir; searching for venv with uv..."
+            local uv_venv
+            uv_venv=$(
+                2>/dev/null uv run env |
+                grep '^VIRTUAL_ENV=' |
+                cut -d= -f2
+            )
+            if [[ "$uv_venv" ]]; then
+                activate="source '$uv_venv/bin/activate'"
+                return 0
+            fi
+
+            >&2 echo "No uv managed project in dir or parents; trying Poetry..."
+            activate=$(poetry env activate) || return 1
+        }
+
+        _find_managed_venv || return 1
     fi
 
     >&2 echo "$activate"
