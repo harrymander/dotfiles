@@ -59,7 +59,7 @@ EOF
             >&2 echo "Not a virtualenv directory: $venv_dir; searching for venv with uv..."
             local uv_venv
             uv_venv=$(
-                2>/dev/null uv run --frozen env |
+                uv run --frozen env |
                 grep '^VIRTUAL_ENV=' |
                 cut -d= -f2
             )
