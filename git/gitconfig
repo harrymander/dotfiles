@@ -53,6 +53,11 @@
 
 	sed = !git grep --null --name-only -I . | xargs -0 sed --in-place -e
 
+	# Difftastic aliases
+	dlog = -c diff.external=difft log --ext-diff
+	dshow = -c diff.external=difft show --ext-diff
+	ddiff = -c diff.external=difft diff
+
 [core]
 	editor = vim
 [diff]
