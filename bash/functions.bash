@@ -106,3 +106,7 @@ google() {
 gpt() {
     "${GPT_BROWSER:-xdg-open}" "https://chatgpt.com/?q=${*}"
 }
+
+wiki() {
+    "${WIKI_BROWSER:-xdg-open}" "https://${WIKI_LANG:-en}.wikipedia.org/wiki/${*}"
+}
