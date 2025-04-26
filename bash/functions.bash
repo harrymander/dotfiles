@@ -102,3 +102,7 @@ cref() { zeal "c:$*"; }
 google() {
     "${GOOGLE_BROWSER:-xdg-open}" "https://google.com/search?q=${*}"
 }
+
+gpt() {
+    "${GPT_BROWSER:-xdg-open}" "https://chatgpt.com/?q=${*}"
+}
