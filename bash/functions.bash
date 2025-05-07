@@ -110,3 +110,6 @@ gpt() {
 wiki() {
     "${WIKI_BROWSER:-xdg-open}" "https://${WIKI_LANG:-en}.wikipedia.org/wiki/${*}"
 }
+
+alias py='uv run python3'
+alias ipy='uv run --with ipython ipython3'
