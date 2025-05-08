@@ -112,7 +112,7 @@ wiki() {
 }
 
 alias py='uv run python3'
-alias ipy='uv run --with ipython ipython3'
+alias ipy='PYTHONBREAKPOINT=ipdb.set_trace uv run --with ipdb --with ipython ipython3'
 
 # Run ipdb (pdb with IPython) under current uv env. Run until exception or
 # breakpoint occurs and exit after script finish (rather than restarting).
