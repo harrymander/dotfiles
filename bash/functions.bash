@@ -111,13 +111,13 @@ wiki() {
     "${WIKI_BROWSER:-xdg-open}" "https://${WIKI_LANG:-en}.wikipedia.org/wiki/${*}"
 }
 
-alias py='uv run python3'
-alias ipy='PYTHONBREAKPOINT=ipdb.set_trace uv run --with ipdb --with ipython ipython3'
-alias ipdb='PYTHONBREAKPOINT=ipdb.set_trace uv run --with ipdb ipdb3'
+alias py='uv run --frozen python3'
+alias ipy='PYTHONBREAKPOINT=ipdb.set_trace uv run --frozen --with ipdb --with ipython ipython3'
+alias ipdb='PYTHONBREAKPOINT=ipdb.set_trace uv run --frozen --with ipdb ipdb3'
 
 # Run pytest, entering ipdb on errors. Requires pytest to be installed in the
 # venv/project.
 alias pytest-ipdb='
-    uv run --with ipdb python3 \
+    uv run --frozen --with ipdb python3 \
     -m pytest \
     --pdb --pdbcls=IPython.terminal.debugger:TerminalPdb'
