@@ -113,12 +113,7 @@ wiki() {
 
 alias py='uv run python3'
 alias ipy='PYTHONBREAKPOINT=ipdb.set_trace uv run --with ipdb --with ipython ipython3'
-
-# Run ipdb (pdb with IPython) under current uv env. Run until exception or
-# breakpoint occurs and exit after script finish (rather than restarting).
-# Setting PYTHONBREAKPOINT is required to get calls to `breakpoint()` to use
-# ipdb instead of regular pdb debugger.
-alias ipdb='PYTHONBREAKPOINT=ipdb.set_trace uv run --with ipdb ipdb3 -c continue -c quit'
+alias ipdb='PYTHONBREAKPOINT=ipdb.set_trace uv run --with ipdb ipdb3'
 
 # Run pytest, entering ipdb on errors. Requires pytest to be installed in the
 # venv/project.
