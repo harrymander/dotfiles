@@ -99,16 +99,21 @@ pydocs() { zeal "python:$*"; }
 cppref() { zeal "cpp:$*"; }
 cref() { zeal "c:$*"; }
 
+__urlencode() {
+    # From https://stackoverflow.com/a/34407620
+    printf "%s" "${*}" | jq --slurp --raw-input --raw-output @uri
+}
+
 google() {
-    "${GOOGLE_BROWSER:-xdg-open}" "https://google.com/search?q=${*}"
+    "${GOOGLE_BROWSER:-xdg-open}" "https://google.com/search?q=$(__urlencode "${*}")"
 }
 
 gpt() {
-    "${GPT_BROWSER:-xdg-open}" "https://chatgpt.com/?q=${*}"
+    "${GPT_BROWSER:-xdg-open}" "https://chatgpt.com/?q=$(__urlencode "${*}")"
 }
 
 wiki() {
-    "${WIKI_BROWSER:-xdg-open}" "https://${WIKI_LANG:-en}.wikipedia.org/wiki/${*}"
+    "${WIKI_BROWSER:-xdg-open}" "https://${WIKI_LANG:-en}.wikipedia.org/wiki/$(__urlencode "${*}")"
 }
 
 alias py='uv run --frozen python3'
