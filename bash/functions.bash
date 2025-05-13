@@ -104,16 +104,21 @@ __urlencode() {
     printf "%s" "${*}" | jq --slurp --raw-input --raw-output @uri
 }
 
+__open_browser() {
+    local prefix=$1; shift
+    "${BROWSER:-xdg-open}" "${prefix}$(__urlencode "${*}")"
+}
+
 google() {
-    "${GOOGLE_BROWSER:-xdg-open}" "https://google.com/search?q=$(__urlencode "${*}")"
+    __open_browser "https://google.com/search?q=" "${*}"
 }
 
 gpt() {
-    "${GPT_BROWSER:-xdg-open}" "https://chatgpt.com/?q=$(__urlencode "${*}")"
+    __open_browser "https://chatgpt.com/?q=" "${*}"
 }
 
 wiki() {
-    "${WIKI_BROWSER:-xdg-open}" "https://${WIKI_LANG:-en}.wikipedia.org/wiki/$(__urlencode "${*}")"
+    __open_browser "https://${WIKI_LANG:-en}.wikipedia.org/wiki/" "${*}"
 }
 
 alias py='uv run --frozen python3'
