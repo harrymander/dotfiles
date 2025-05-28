@@ -58,12 +58,7 @@ EOF
         _find_managed_venv() {
             >&2 echo "Not a virtualenv directory: $venv_dir; searching for venv with uv..."
             local uv_venv
-            uv_venv=$(
-                uv run --frozen env |
-                grep '^VIRTUAL_ENV=' |
-                cut -d= -f2
-            )
-            if [[ "$uv_venv" ]]; then
+            if uv_venv=$(uv run python -c 'import sys; print(sys.prefix) if sys.base_prefix != sys.prefix else sys.exit(1)'); then
                 activate="source '$uv_venv/bin/activate'"
                 return 0
             fi
