@@ -48,9 +48,6 @@
 			echo `git show --format=\"%ai %ar by %an\" $branch | head -n 1` \t$branch; \
 		done | sort -r"
 
-	# Push to all remotes
-	pushall = !git remote | xargs -d'\\n' -I{} git push {}
-
 	sed = !git grep --null --name-only -I . | xargs -0 sed --in-place -e
 
 	# Difftastic aliases

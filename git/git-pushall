@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+REMOTES=$(git remote)
+if [ -n "$REMOTES" ]; then
+    for remote in $REMOTES; do
+        git push "$remote" "$@"
+    done
+else
+    # No remotes - just pass the args throught to 'git push' to get the same
+    # error message
+    git push "$@"
+fi
