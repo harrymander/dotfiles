@@ -116,14 +116,8 @@ wiki() {
     __open_browser "https://${WIKI_LANG:-en}.wikipedia.org/wiki/" "${*}"
 }
 
-alias py='
-    uv run --frozen python3 ||
-    ( >&2 echo "py: using system python" && python3 )'
-
-alias ipy='
-    PYTHONBREAKPOINT=ipdb.set_trace uv run --frozen --with ipdb --with ipython ipython3 ||
-    ( >&2 echo "ipy: using system ipython" && ipython3 )'
-
+alias py='uv run --frozen python3'
+alias ipy='PYTHONBREAKPOINT=ipdb.set_trace uv run --frozen --with ipdb --with ipython ipython3'
 alias ipdb='PYTHONBREAKPOINT=ipdb.set_trace uv run --frozen --with ipdb ipdb3'
 
 # Run pytest, entering ipdb on errors. Requires pytest to be installed in the
