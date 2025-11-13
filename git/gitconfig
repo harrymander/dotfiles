@@ -55,6 +55,7 @@
 	dshow = -c diff.external=difft show --ext-diff
 	ddiff = -c diff.external=difft diff
 	dd = -c diff.external=difft diff
+	dstash = -c diff.external=difft stash show -p --ext-diff
 
 [core]
 	editor = vim
