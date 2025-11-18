@@ -126,3 +126,6 @@ alias pytest-ipdb='
     uv run --frozen --with ipdb python3 \
     -m pytest \
     --pdb --pdbcls=IPython.terminal.debugger:TerminalPdb'
+
+alias fgit='git -c "interactive.diffFilter=diff-so-fancy --patch" \
+                -c "core.pager=diff-so-fancy | less --tabs=4 -RF"'

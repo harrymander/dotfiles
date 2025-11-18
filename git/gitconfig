@@ -57,6 +57,21 @@
 	dd = ddiff
 	dstash = -c diff.external=difft stash show -p --ext-diff
 
+	# diff-so-fancy aliases
+	fdiff =  "-c 'interactive.diffFilter=diff-so-fancy --patch' \
+			  -c 'core.pager=diff-so-fancy | less --tabs=4 -RF' \
+			  diff"
+	fshow =  "-c 'interactive.diffFilter=diff-so-fancy --patch' \
+			  -c 'core.pager=diff-so-fancy | less --tabs=4 -RF' \
+			  show"
+	flog =   "-c 'interactive.diffFilter=diff-so-fancy --patch' \
+			  -c 'core.pager=diff-so-fancy | less --tabs=4 -RF' \
+			  log"
+	fstash = "-c 'interactive.diffFilter=diff-so-fancy --patch' \
+			  -c 'core.pager=diff-so-fancy | less --tabs=4 -RF' \
+			  stash show -p"
+	fd = fdiff
+
 [core]
 	editor = vim
 [diff]
