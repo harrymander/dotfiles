@@ -52,6 +52,7 @@ function _update_ps1() {
 
     # Number of jobs
     local jobs
+    # shellcheck disable=SC2016
     jobs="$(jobs | grep --count --invert-match '\\command zoxide add -- "\${__zoxide_oldpwd}"$')"
     if [[ "${jobs}" -ne 0 ]]; then
         PS1+="[${jobs}] "
