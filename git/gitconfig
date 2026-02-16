@@ -47,7 +47,7 @@
 			echo `git show --format=\"%ai %ar by %an\" $branch | head -n 1` \t$branch; \
 		done | sort -r"
 
-	sed = !git grep --null --name-only -I . | xargs -0 sed --in-place -e
+	sed = !git grep --null --name-only -I . | xargs -0 sed --in-place
 
 	# Difftastic aliases
 	dlog = -c diff.external=difft log --ext-diff
