@@ -5,7 +5,7 @@
 # Open multiple files with xdg-open
 open() {
     for i in "$@"; do
-        xdg-open "$i"
+        2>/dev/null xdg-open "$i"
     done
 }
 
