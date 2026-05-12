@@ -85,8 +85,8 @@ cdd() {
 }
 
 alias last-screenshot='
-    find "$HOME/Pictures/Screenshots" -maxdepth 1 -name "Screenshot from *" |
-    sort -r |
+    find "$HOME/Pictures/Screenshots" -maxdepth 1 -iname "screenshot from *" |
+    sort --ignore-case --reverse |
     head -n 1'
 alias rsync="rsync --verbose --info=progress2"
 
