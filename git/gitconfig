@@ -77,3 +77,5 @@
 	tool = vimdiff
 [color]
 	ui = auto
+[clean]
+	requireForce = true
