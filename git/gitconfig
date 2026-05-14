@@ -1,81 +1,81 @@
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [alias]
-	br = branch
-	st = status
-	h = help
-	sm = submodule
-	rl = reflog
+    br = branch
+    st = status
+    h = help
+    sm = submodule
+    rl = reflog
 
-	# Commit operations
-	amend = commit --amend
-	ci = commit
-	cp = cherry-pick
+    # Commit operations
+    amend = commit --amend
+    ci = commit
+    cp = cherry-pick
 
-	# Checkout/switch operations
-	co = checkout
-	sw = switch
-	col = switch @{-1}
+    # Checkout/switch operations
+    co = checkout
+    sw = switch
+    col = switch @{-1}
 
-	# Log operations
-	summary = log --pretty=oneline
-	l = summary
-	lplain = log --oneline --no-decorate
-	last = log -1 HEAD
-	tree = log --graph --oneline --all --decorate
+    # Log operations
+    summary = log --pretty=oneline
+    l = summary
+    lplain = log --oneline --no-decorate
+    last = log -1 HEAD
+    tree = log --graph --oneline --all --decorate
 
-	# Diffing operations
-	d = diff
-	diffname = diff --name-status
-	diffword = diff --word-diff
-	wdiff = diff --word-diff
-	check = diff --check
+    # Diffing operations
+    d = diff
+    diffname = diff --name-status
+    diffword = diff --word-diff
+    wdiff = diff --word-diff
+    check = diff --check
 
-	# Config
-	cfg = config --global
-	cfl = config --local
-	cfs = config --system
+    # Config
+    cfg = config --global
+    cfl = config --local
+    cfs = config --system
 
-	# Rebase actions
-	abort = rebase --abort
-	reword = rebase-commit reword
-	edit = rebase-commit edit
+    # Rebase actions
+    abort = rebase --abort
+    reword = rebase-commit reword
+    edit = rebase-commit edit
 
-	# Show author of most recent commit on each branch
-	branchauthors = "! \
-		for branch in `git branch -r | grep -v HEAD`; do \
-			echo `git show --format=\"%ai %ar by %an\" $branch | head -n 1` \t$branch; \
-		done | sort -r"
+    # Show author of most recent commit on each branch
+    branchauthors = "! \
+        for branch in `git branch -r | grep -v HEAD`; do \
+            echo `git show --format=\"%ai %ar by %an\" $branch | head -n 1` \t$branch; \
+        done | sort -r"
 
-	sed = !git grep --null --name-only -I . | xargs -0 sed --in-place
+    sed = !git grep --null --name-only -I . | xargs -0 sed --in-place
 
-	# Difftastic aliases
-	dlog = -c diff.external=difft log --ext-diff
-	dshow = -c diff.external=difft show --ext-diff
-	ddiff = -c diff.external=difft diff
-	dd = ddiff
-	dstash = -c diff.external=difft stash show -p --ext-diff
+    # Difftastic aliases
+    dlog = -c diff.external=difft log --ext-diff
+    dshow = -c diff.external=difft show --ext-diff
+    ddiff = -c diff.external=difft diff
+    dd = ddiff
+    dstash = -c diff.external=difft stash show -p --ext-diff
 
-	# diff-so-fancy aliases
-	fdiff =  "-c 'interactive.diffFilter=diff-so-fancy --patch' \
-			  -c 'core.pager=diff-so-fancy | less --tabs=4 -RF' \
-			  diff"
-	fshow =  "-c 'interactive.diffFilter=diff-so-fancy --patch' \
-			  -c 'core.pager=diff-so-fancy | less --tabs=4 -RF' \
-			  show"
-	flog =   "-c 'interactive.diffFilter=diff-so-fancy --patch' \
-			  -c 'core.pager=diff-so-fancy | less --tabs=4 -RF' \
-			  log"
-	fstash = "-c 'interactive.diffFilter=diff-so-fancy --patch' \
-			  -c 'core.pager=diff-so-fancy | less --tabs=4 -RF' \
-			  stash show -p"
-	fd = fdiff
+    # diff-so-fancy aliases
+    fdiff =  "-c 'interactive.diffFilter=diff-so-fancy --patch' \
+              -c 'core.pager=diff-so-fancy | less --tabs=4 -RF' \
+              diff"
+    fshow =  "-c 'interactive.diffFilter=diff-so-fancy --patch' \
+              -c 'core.pager=diff-so-fancy | less --tabs=4 -RF' \
+              show"
+    flog =   "-c 'interactive.diffFilter=diff-so-fancy --patch' \
+              -c 'core.pager=diff-so-fancy | less --tabs=4 -RF' \
+              log"
+    fstash = "-c 'interactive.diffFilter=diff-so-fancy --patch' \
+              -c 'core.pager=diff-so-fancy | less --tabs=4 -RF' \
+              stash show -p"
+    fd = fdiff
 
 [core]
-	editor = vim
+    editor = vim
 [diff]
-	tool = vimdiff
+    tool = vimdiff
 [color]
-	ui = auto
+    ui = auto
 [clean]
-	requireForce = true
+    requireForce = true
