@@ -138,6 +138,7 @@ __uv_run() {
         esac
     done
 
+    >&2 echo uv run --frozen "${with_args[@]}" "${args[@]}" "$@"
     uv run --frozen "${with_args[@]}" "${args[@]}" "$@"
 }
 
