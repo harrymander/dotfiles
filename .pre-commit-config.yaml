@@ -1,10 +1,5 @@
 repos:
-  - repo: local
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1
     hooks:
       - id: shellcheck
-        name: shellcheck
-        language: python
-        types: [shell]
-        additional_dependencies:
-          - shellcheck-py==0.11.0.1
-        entry: shellcheck
