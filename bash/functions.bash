@@ -149,7 +149,7 @@ alias ipy='PYTHONBREAKPOINT=ipdb.set_trace __uv_run --with=ipdb --with=ipython i
 # Run pytest, entering ipdb on errors. Requires pytest to be installed in the
 # venv/project.
 alias pytest-ipdb='
-    uv run --frozen --with ipdb python3 \
+    __uv_run --with ipdb python3 \
     -m pytest \
     --pdb --pdbcls=IPython.terminal.debugger:TerminalPdb'
 
