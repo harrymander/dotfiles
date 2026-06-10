@@ -116,9 +116,34 @@ wiki() {
     __open_browser "https://${WIKI_LANG:-en}.wikipedia.org/wiki/" "${*}"
 }
 
-alias py='uv run --frozen python3'
-alias ipy='PYTHONBREAKPOINT=ipdb.set_trace uv run --frozen --with ipdb --with ipython ipython3'
-alias ipdb='PYTHONBREAKPOINT=ipdb.set_trace uv run --frozen --with ipdb ipdb3'
+__uv_run() {
+    # Separate out --with/-w args
+    local with_args=()
+    local args=()
+    while [[ $# -gt 0 ]]; do
+        arg="$1"; shift
+        case "$arg" in
+        -w|--with)
+            with_args+=( "$arg" "$1" )
+            shift
+            ;;
+        --with=*)
+            with_args+=( "$arg" )
+            ;;
+        --)
+            break
+            ;;
+        *)
+            args+=( "$arg" )
+        esac
+    done
+
+    uv run --frozen "${with_args[@]}" "${args[@]}" "$@"
+}
+
+alias py='__uv_run python3'
+alias ipdb='PYTHONBREAKPOINT=ipdb.set_trace __uv_run --with=ipdb ipdb'
+alias ipy='PYTHONBREAKPOINT=ipdb.set_trace __uv_run --with=ipdb --with=ipython ipython'
 
 # Run pytest, entering ipdb on errors. Requires pytest to be installed in the
 # venv/project.
